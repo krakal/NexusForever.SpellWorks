@@ -11,8 +11,8 @@ namespace NexusForever.SpellWorks.ViewModels
     {
         public override string Header => "Spells";
 
-        public SpellInfoControlViewModel SpellInfoControlLeft { get; }
-        public SpellInfoControlViewModel SpellInfoControlRight { get; }
+        public SpellInfoViewModel SpellInfoControlLeft { get; }
+        public SpellInfoViewModel SpellInfoControlRight { get; }
 
         public ObservableCollection<ISpellModel> Spells { get; } = [];
 
@@ -55,7 +55,7 @@ namespace NexusForever.SpellWorks.ViewModels
         public SpellsTabViewModel(
             ISpellModelService spellModelService,
             ISpellModelFilterService spellModelFilterService,
-            SpellInfoControlViewModel mainSpellControl)
+            SpellInfoViewModel mainSpellControl)
         {
             _spellModelService       = spellModelService;
             _spellModelFilterService = spellModelFilterService;

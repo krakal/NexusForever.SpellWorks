@@ -31,13 +31,15 @@ namespace NexusForever.SpellWorks.ViewModels
             IDialogCoordinator dialogCoordinator,
             IResourceService resourceService,
             SpellsTabViewModel spellsTabViewModel,
-            ProcsTabViewModel procsTabViewModel)
+            ProcsTabViewModel procsTabViewModel,
+            SettingsTabViewModel settingsTabViewModel)
         {
             _dialogCoordinator = dialogCoordinator;
             _resourceService   = resourceService;
 
             Tabs.Add(spellsTabViewModel);
             Tabs.Add(procsTabViewModel);
+            Tabs.Add(settingsTabViewModel);
         }
 
         #endregion

@@ -40,6 +40,12 @@
                 <DataTemplate DataType="{x:Type vm:SpellsTabViewModel}">
                     <v:SpellsTabControl/>
                 </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:ProcsTabViewModel}">
+                    <v:ProcsTabControl/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:SettingsTabViewModel}">
+                    <v:SettingsTabControl/>
+                </DataTemplate>
             </TabControl.Resources>
 
         </mah:MetroAnimatedSingleRowTabControl>

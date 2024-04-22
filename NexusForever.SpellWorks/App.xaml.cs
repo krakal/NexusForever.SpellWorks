@@ -40,9 +40,12 @@ namespace NexusForever.SpellWorks
 
             services.AddTransient<MainWindow>();
             services.AddTransient<MainWindowViewModel>();
+            services.AddTransient<SpellInfoViewModel>();
+            services.AddTransient<SpellInfoSpellTabViewModel>();
+            services.AddTransient<SpellInfoEffectsTabViewModel>();
             services.AddTransient<SpellsTabViewModel>();
             services.AddTransient<ProcsTabViewModel>();
-            services.AddTransient<SpellInfoControlViewModel>();
+            services.AddTransient<SettingsTabViewModel>();
 
             services.AddSingleton<IDialogCoordinator, DialogCoordinator>();
 

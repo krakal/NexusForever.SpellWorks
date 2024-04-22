@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Filter\" />
+    <Folder Include="ViewModels\Windows\" />
   </ItemGroup>
 
 </Project>
