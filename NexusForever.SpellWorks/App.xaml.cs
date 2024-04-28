@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Reflection;
+using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
 using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,13 +40,16 @@ namespace NexusForever.SpellWorks
         {
             services.Configure<SpelllWorksConfiguration>(_configuration);
 
+            services.AddSingleton<IMessenger, WeakReferenceMessenger>();
+
             services.AddTransient<MainWindow>();
             services.AddTransient<MainWindowViewModel>();
+            services.AddTransient<SpellInfoSearchViewModel>();
             services.AddTransient<SpellInfoViewModel>();
             services.AddTransient<SpellInfoSpellTabViewModel>();
             services.AddTransient<SpellInfoEffectsTabViewModel>();
-            services.AddTransient<SpellsTabViewModel>();
-            services.AddTransient<ProcsTabViewModel>();
+            services.AddTransient<SpellInfoProcsTabViewModel>();
+            services.AddTransient<MainTabViewModel>();
             services.AddTransient<SettingsTabViewModel>();
 
             services.AddSingleton<IDialogCoordinator, DialogCoordinator>();
@@ -53,12 +58,32 @@ namespace NexusForever.SpellWorks
             services.AddSingleton<IArchiveService, ArchiveService>();
             services.AddSingleton<ITextTableService, TextTableService>();
             services.AddSingleton<IGameTableService, GameTableService>();
+            services.AddSingleton<ISpellTooltipParseService, SpellTooltipParseService>();
 
             services.AddSingleton<ISpellModelFilterService, SpellModelFilterService>();
             services.AddSingleton<ISpellModelService, SpellModelService>();
             services.AddTransient<ISpellModel, SpellModel>();
             services.AddTransient<ISpellBaseModel, SpellBaseModel>();
             services.AddTransient<ISpellEffectModel, SpellEffectModel>();
+            services.AddTransient<ISpellProcModel, SpellProcModel>();
+
+            foreach (Type type in Assembly.GetExecutingAssembly().GetTypes())
+            {
+                var attribute = type.GetCustomAttribute<SpellEffectAttribute>();
+                if (attribute == null)
+                    continue;
+
+                if (type.IsAssignableTo(typeof(ISpellEffectColumnData)))
+                {
+                    services.AddKeyedTransient(typeof(ISpellEffectColumnData), attribute.Type, type);
+                }
+
+                if (type.IsAssignableTo(typeof(ISpellEffectRowData)))
+                {
+                    services.AddKeyedTransient(typeof(ISpellEffectRowData), attribute.Type, type);
+                }
+            }
+
         }
 
         protected override void OnStartup(StartupEventArgs e)

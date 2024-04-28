@@ -1,9 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using System.Windows.Controls;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using MahApps.Metro.Controls.Dialogs;
+using NexusForever.SpellWorks.Messages;
 using NexusForever.SpellWorks.Services;
 
 namespace NexusForever.SpellWorks.ViewModels
@@ -17,28 +18,27 @@ namespace NexusForever.SpellWorks.ViewModels
         [ObservableProperty]
         private int _selectedTabIndex;
 
-
-
         public ICommand OnLoadCommand => _onLoadCommand ??= new AsyncRelayCommand(OnLoad);
         private ICommand _onLoadCommand;
 
         #region Dependency Injection
 
+        private readonly IMessenger _messenger;
         private readonly IDialogCoordinator _dialogCoordinator;
         private readonly IResourceService _resourceService;
 
         public MainWindowViewModel(
+            IMessenger messenger,
             IDialogCoordinator dialogCoordinator,
             IResourceService resourceService,
-            SpellsTabViewModel spellsTabViewModel,
-            ProcsTabViewModel procsTabViewModel,
+            MainTabViewModel mainTabViewModel,
             SettingsTabViewModel settingsTabViewModel)
         {
+            _messenger         = messenger;
             _dialogCoordinator = dialogCoordinator;
             _resourceService   = resourceService;
 
-            Tabs.Add(spellsTabViewModel);
-            Tabs.Add(procsTabViewModel);
+            Tabs.Add(mainTabViewModel);
             Tabs.Add(settingsTabViewModel);
         }
 
@@ -55,6 +55,7 @@ namespace NexusForever.SpellWorks.ViewModels
             try
             {
                 await _resourceService.Initialise(controller);
+                _messenger.Send(new SpellResourcesLoaded());
             }
             catch (Exception e)
             {

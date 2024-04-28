@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ViewModels\Windows\**" />
+    <EmbeddedResource Remove="ViewModels\Windows\**" />
+    <None Remove="ViewModels\Windows\**" />
+    <Page Remove="ViewModels\Windows\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
@@ -27,11 +34,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NexusForever.SpellWorks.GameTable\NexusForever.SpellWorks.GameTable.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Filter\" />
-    <Folder Include="ViewModels\Windows\" />
   </ItemGroup>
 
 </Project>

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace NexusForever.SpellWorks.Views
 {
     /// <summary>
-    /// Interaction logic for ProcsTabControl.xaml
+    /// Interaction logic for SpellInfoSearchControl.xaml
     /// </summary>
-    public partial class ProcsTabControl : UserControl
+    public partial class SpellInfoSearchControl : UserControl
     {
-        public ProcsTabControl()
+        public SpellInfoSearchControl()
         {
             InitializeComponent();
         }

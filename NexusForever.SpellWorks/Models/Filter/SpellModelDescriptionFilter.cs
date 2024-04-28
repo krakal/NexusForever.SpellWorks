@@ -1,6 +1,6 @@
-﻿namespace NexusForever.SpellWorks.Models
+﻿namespace NexusForever.SpellWorks.Models.Filter
 {
-    public class SpellModelFilter : ISpellModelFilter
+    public class SpellModelDescriptionFilter : ISpellModelFilter
     {
         public string Description { get; set; }
 

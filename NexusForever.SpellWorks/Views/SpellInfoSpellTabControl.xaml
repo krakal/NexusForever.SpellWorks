@@ -20,6 +20,8 @@
 
         </Expander>
 
+        <TextBlock Text="{Binding SelectedSpell.ActionBarTooltip}"/>
+
     </StackPanel>
 
 </UserControl>

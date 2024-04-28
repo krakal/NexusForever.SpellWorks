@@ -5,10 +5,14 @@ namespace NexusForever.SpellWorks.Models
 {
     public interface ISpellEffectModel
     {
-        Spell4EffectsEntry Entry { get; }
         SpellEffectType Type { get; }
-        ISpellEffectDataModel Data { get; }
-        List<ISpellEffectDataModel> DataGrid { get; }
+        uint DamageType { get; }
+        uint DelayTime { get; }
+        uint TickTime { get; }
+        uint DurationTime { get; }
+        uint Flags { get; }
+        ISpellEffectColumnData ColumnData { get; }
+        List<ISpellEffectRowData> RowData { get; }
 
         void Initialise(Spell4EffectsEntry entry);
     }

@@ -2,16 +2,19 @@
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using NexusForever.SpellWorks.Messages;
 using NexusForever.SpellWorks.Models;
 
 namespace NexusForever.SpellWorks.ViewModels
 {
-    public partial class SpellInfoViewModel : ObservableObject
+    public partial class SpellInfoViewModel : ObservableObject, IRecipient<SpellSelectedMessage>, IRecipient<SpellHyperlinkClicked>
     {
         public ObservableCollection<BaseTabItem> Tabs { get; } = [];
 
         private SpellInfoSpellTabViewModel _spellInfoSpellTabViewModel;
         private SpellInfoEffectsTabViewModel _spellInfoEffectsTabViewModel;
+        private SpellInfoProcsTabViewModel _spellInfoProcsTabViewModel;
 
         [ObservableProperty]
         private string _title;
@@ -23,6 +26,7 @@ namespace NexusForever.SpellWorks.ViewModels
         {
             _spellInfoSpellTabViewModel.SelectedSpell = value;
             _spellInfoEffectsTabViewModel.SelectedSpell = value;
+            _spellInfoProcsTabViewModel.SelectedSpell = value;
 
             Title = $"{value?.Id} - {value?.Description}";
         }
@@ -48,14 +52,22 @@ namespace NexusForever.SpellWorks.ViewModels
         #region Depedency Injection
 
         public SpellInfoViewModel(
+            IMessenger messenger,
             SpellInfoSpellTabViewModel spellInfoSpellTabViewModel,
-            SpellInfoEffectsTabViewModel spellInfoEffectsTabViewModel)
+            SpellInfoEffectsTabViewModel spellInfoEffectsTabViewModel,
+            SpellInfoProcsTabViewModel spellInfoProcsTabViewModel)
         {
+            messenger.Register<SpellSelectedMessage>(this);
+            messenger.Register<SpellHyperlinkClicked>(this);
+
             _spellInfoSpellTabViewModel   = spellInfoSpellTabViewModel;
             _spellInfoEffectsTabViewModel = spellInfoEffectsTabViewModel;
+            _spellInfoProcsTabViewModel   = spellInfoProcsTabViewModel;
+
 
             Tabs.Add(_spellInfoSpellTabViewModel);
             Tabs.Add(_spellInfoEffectsTabViewModel);
+            Tabs.Add(_spellInfoProcsTabViewModel);
         }
 
         #endregion
@@ -63,6 +75,25 @@ namespace NexusForever.SpellWorks.ViewModels
         public SpellInfoViewModel()
         {
         }
+
+        public void Receive(SpellSelectedMessage message)
+        {
+            OnBla(message.Spell);
+        }
+
+        public void Receive(SpellHyperlinkClicked message)
+        {
+            OnBla(message.Spell);
+        }
+
+        public void OnBla(ISpellModel spell)
+        {
+            if (IsLocked)
+                return;
+
+            SelectedSpell = spell;
+        }
+
 
         
     }

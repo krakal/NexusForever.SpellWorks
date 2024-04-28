@@ -1,6 +1,7 @@
 ﻿using MahApps.Metro.Controls.Dialogs;
 using Microsoft.Extensions.DependencyInjection;
 using NexusForever.SpellWorks.GameTable.Model;
+using NexusForever.SpellWorks.GameTable.Static;
 using NexusForever.SpellWorks.Models;
 
 namespace NexusForever.SpellWorks.Services
@@ -8,8 +9,10 @@ namespace NexusForever.SpellWorks.Services
     public class SpellModelService : ISpellModelService
     {
         public Dictionary<uint, ISpellBaseModel> SpellBaseModels { get; } = [];
-        public List<ISpellModel> SpellModels { get; } = [];
+        public Dictionary<uint, ISpellModel> SpellModels { get; } = [];
         public Dictionary<uint, List<ISpellEffectModel>> SpellEffectModels { get; } = [];
+        public Dictionary<uint, List<ISpellProcModel>> SpellProcModels { get; } = [];
+        public Dictionary<uint, List<uint>> SpellProcReferences { get; } = [];
 
         #region Dependency Injection
 
@@ -31,14 +34,17 @@ namespace NexusForever.SpellWorks.Services
             controller.SetIndeterminate();
             controller.SetMessage("Loading Spell Models...");
 
-            InitialiseBaseSpells();
+            InitialiseBaseSpellModels();
             InitialiseSpellEffectModels();
+            InitialiseSpellProcsModels();
+
+            // must happen last, requires effects and procs to be initialised
             InitialiseSpells();
 
             return Task.CompletedTask;
         }
 
-        private void InitialiseBaseSpells()
+        private void InitialiseBaseSpellModels()
         {
             foreach (Spell4BaseEntry item in _gameTableService.Spell4Base.Entries)
             {
@@ -54,24 +60,51 @@ namespace NexusForever.SpellWorks.Services
             {
                 var model = _serviceProvider.GetService<ISpellModel>();
                 model.Initialise(item);
-                SpellModels.Add(model);
+                SpellModels.Add(item.Id, model);
             }
         }
 
         private void InitialiseSpellEffectModels()
         {
-            foreach (Spell4EffectsEntry item in _gameTableService.Spell4Effects.Entries)
+            foreach (var spellEffectsBySpellId in _gameTableService.Spell4Effects.Entries
+                .GroupBy(e => e.SpellId))
             {
-                var model = _serviceProvider.GetService<ISpellEffectModel>();
-                model.Initialise(item);
+                var effectList = new List<ISpellEffectModel>();
+                SpellEffectModels.Add(spellEffectsBySpellId.Key, effectList);
 
-                if (!SpellEffectModels.TryGetValue(model.Entry.SpellId, out List<ISpellEffectModel> list))
+                foreach (Spell4EffectsEntry entry in spellEffectsBySpellId)
                 {
-                    list = new List<ISpellEffectModel>();
-                    SpellEffectModels.Add(model.Entry.SpellId, list);
+                    var model = _serviceProvider.GetService<ISpellEffectModel>();
+                    model.Initialise(entry);
+                    effectList.Add(model);
                 }
+            }
+        }
 
-                list.Add(model);
+        private void InitialiseSpellProcsModels()
+        {
+            foreach (var spellEffectsBySpellId in _gameTableService.Spell4Effects.Entries
+                .GroupBy(e => e.SpellId))
+            {
+                var procsList = new List<ISpellProcModel>();
+                SpellProcModels.Add(spellEffectsBySpellId.Key, procsList);
+
+                foreach (Spell4EffectsEntry spellEffectEntry in spellEffectsBySpellId
+                    .Where(e => e.EffectType == SpellEffectType.Proc))
+                {
+                    var procModel = _serviceProvider.GetService<ISpellProcModel>();
+                    procModel.Initialise(spellEffectEntry);
+                    procsList.Add(procModel);
+
+                    if (!SpellProcReferences.TryGetValue(spellEffectEntry.DataBits01, out List<uint> references))
+                    {
+                        references = new List<uint>();
+                        SpellProcReferences.Add(spellEffectEntry.DataBits01, references);
+                    }
+
+                    references.Add(spellEffectEntry.SpellId);
+                }
+                
             }
         }
     }

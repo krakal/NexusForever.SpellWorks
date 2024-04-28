@@ -3,11 +3,11 @@
 namespace NexusForever.SpellWorks.Models
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class SpellEffectDataModelAttribute : Attribute
+    public class SpellEffectAttribute : Attribute
     {
         public SpellEffectType Type { get; }
 
-        public SpellEffectDataModelAttribute(SpellEffectType type)
+        public SpellEffectAttribute(SpellEffectType type)
         {
             Type = type;
         }

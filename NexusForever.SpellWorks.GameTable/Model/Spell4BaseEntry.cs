@@ -1,3 +1,5 @@
+using NexusForever.SpellWorks.GameTable.Static;
+
 namespace NexusForever.SpellWorks.GameTable.Model
 {
     public class Spell4BaseEntry
@@ -20,7 +22,7 @@ namespace NexusForever.SpellWorks.GameTable.Model
         public uint WorldZoneIdZoneRequired;
         public uint Spell4SpellTypesIdSpellType;
         public string Icon;
-        public uint CastMethod;
+        public CastMethod CastMethod;
         public uint School;
         public uint SpellClass;
         public uint WeaponSlot;

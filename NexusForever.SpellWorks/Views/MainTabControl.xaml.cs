@@ -5,9 +5,9 @@ namespace NexusForever.SpellWorks.Views
     /// <summary>
     /// Interaction logic for SpellsTabControl.xaml
     /// </summary>
-    public partial class SpellsTabControl : UserControl
+    public partial class MainTabControl : UserControl
     {
-        public SpellsTabControl()
+        public MainTabControl()
         {
             InitializeComponent();
         }
