@@ -18,6 +18,7 @@ namespace NexusForever.SpellWorks.Models
         public List<ISpellEffectRowData> RowData { get; } = [];
 
         private Spell4EffectsEntry _entry;
+        public Spell4EffectsEntry Entry => _entry;
 
         #region Dependency Injection
 

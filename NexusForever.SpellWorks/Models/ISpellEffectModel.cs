@@ -14,6 +14,8 @@ namespace NexusForever.SpellWorks.Models
         ISpellEffectColumnData ColumnData { get; }
         List<ISpellEffectRowData> RowData { get; }
 
+        Spell4EffectsEntry Entry { get; }
+
         void Initialise(Spell4EffectsEntry entry);
     }
 }

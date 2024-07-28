@@ -8,7 +8,8 @@ namespace NexusForever.SpellWorks.Models
         public Spell4Entry Entry { get; private set; }
         public uint Id => Entry.Id;
         public string Description => Entry.Description;
-        public string ActionBarTooltip => _spellTooltipParseService.Parse(this);
+        public string ActionBarTooltip => _spellTooltipParseService.GetRawTooltip(this);
+        public string FilledActionBarTooltip => _spellTooltipParseService.Parse(this);
 
         public ISpellBaseModel SpellBaseModel { get; private set; }
         public List<ISpellEffectModel> Effects { get; } = [];

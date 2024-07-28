@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Diagnostics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using NexusForever.SpellWorks.GameTable.Static;
@@ -53,18 +54,28 @@ namespace NexusForever.SpellWorks.ViewModels
         private string _searchDescription;
 
         partial void OnSearchDescriptionChanged(string value)
-        {
-            /*Spells.Clear();
+        {       
+            Spells.Clear();
 
-            var filter = new SpellModelDescriptionFilter
+            foreach (KeyValuePair<uint, ISpellModel> spell in _spellModelService.SpellModels)
             {
-                Description = value
-            };
+                if (spell.Value.Description.Contains(value))
+                {
+                    Spells.Add(spell.Value);
+                }
+            }
 
-            foreach (var item in _spellModelFilterService.Filter([filter], _spellModelService.SpellModels))
-            {
-                Spells.Add(item);
-            }*/
+            //var filter = new SpellModelDescriptionFilter
+            //{
+            //    Description = value
+            //};
+
+            
+
+            //foreach (var item in _spellModelFilterService.Filter([filter], _spellModelService.SpellModels))
+            //{
+            //    Spells.Add(item);
+            //}
         }
 
         public ObservableCollection<SpellTargetMechanicType> TargetMechanicTypes { get; } = [];

@@ -1,0 +1,32 @@
+﻿<UserControl 
+    x:Class="NexusForever.SpellWorks.Views.UnitAttributesControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:vm="clr-namespace:NexusForever.SpellWorks.ViewModels"
+      
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance vm:UnitAttributesViewModel, IsDesignTimeCreatable=True}" Width="213" Height="142">
+
+    <Grid Margin="0,0,0,-71">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Label Content="Level"/>
+            <Label Content="Effective Level"/>
+            <Label Content="Assault Power"/>
+            <Label Content="Support Power"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <TextBox TextWrapping="Wrap" Text="{Binding Level, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+            <TextBox TextWrapping="Wrap" Text="{Binding EffectiveLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+            <TextBox TextWrapping="Wrap" Text="{Binding AssaultPower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+            <TextBox TextWrapping="Wrap" Text="{Binding SupportPower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>

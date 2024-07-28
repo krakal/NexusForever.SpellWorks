@@ -2,26 +2,57 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:v="clr-namespace:NexusForever.SpellWorks.Views"
              xmlns:vm="clr-namespace:NexusForever.SpellWorks.ViewModels"
              
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance vm:SpellInfoSpellTabViewModel, IsDesignTimeCreatable=True}"
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <StackPanel
-        Orientation="Vertical" >
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <Label Content="Level"/>
+                <Label Content="Effective Level"/>
+                <Label Content="Assault Power"/>
+                <Label Content="Support Power"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBox TextWrapping="Wrap" Text="{Binding Level, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+                <TextBox TextWrapping="Wrap" Text="{Binding EffectiveLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+                <TextBox TextWrapping="Wrap" Text="{Binding AssaultPower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+                <TextBox TextWrapping="Wrap" Text="{Binding SupportPower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+            </StackPanel>
+        </Grid>
 
-        <Expander
+
+        <StackPanel
+        Orientation="Vertical" Grid.Row="1" Margin="0,0,0,150" Grid.RowSpan="2" >
+
+            <Expander
             Header="Base"
             IsExpanded="True">
 
-            <TextBlock Text="{Binding SelectedSpell.SpellBaseModel.Name}" />
+                <TextBlock Text="{Binding SelectedSpell.SpellBaseModel.Name}" />
 
-        </Expander>
+            </Expander>
 
-        <TextBlock Text="{Binding SelectedSpell.ActionBarTooltip}"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedSpell.ActionBarTooltip}"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedSpell.FilledActionBarTooltip}"/>
 
-    </StackPanel>
+        </StackPanel>
+    </Grid>
 
 </UserControl>

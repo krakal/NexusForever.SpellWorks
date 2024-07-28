@@ -8,6 +8,7 @@ namespace NexusForever.SpellWorks.Models
         uint Id { get; }
         string Description { get; }
         string ActionBarTooltip { get; }
+        string FilledActionBarTooltip { get; }
 
         ISpellBaseModel SpellBaseModel { get; }
         List<ISpellEffectModel> Effects { get; }

@@ -3,11 +3,11 @@
 namespace NexusForever.SpellWorks.Views
 {
     /// <summary>
-    /// Interaction logic for SpellInfoSearchControl.xaml
+    /// Interaction logic for UnitAttributesControl.xaml
     /// </summary>
-    public partial class SpellInfoSearchControl : UserControl
+    public partial class UnitAttributesControl : UserControl
     {
-        public SpellInfoSearchControl()
+        public UnitAttributesControl()
         {
             InitializeComponent();
         }
