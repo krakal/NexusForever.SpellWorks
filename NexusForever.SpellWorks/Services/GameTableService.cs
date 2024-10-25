@@ -8,6 +8,9 @@ namespace NexusForever.SpellWorks.Services
 {
     public class GameTableService : IGameTableService
     {
+        public GameTable<CCStatesEntry> CCStates { get; private set; }
+        public GameTable<CCStateAdditionalDataEntry> CCStateAdditionalData { get; private set; }
+        public GameTable<CCStateDiminishingReturnsEntry> CCStateDiminishingReturns { get; private set; }
         public GameTable<Spell4Entry> Spell4 { get; private set; }
         public GameTable<Spell4AoeTargetConstraintsEntry> Spell4AoeTargetConstraints { get; private set; }
         public GameTable<Spell4BaseEntry> Spell4Base { get; private set; }
@@ -60,8 +63,11 @@ namespace NexusForever.SpellWorks.Services
         {
             controller.SetMessage("Loading Game Tables...");
             controller.Minimum = 0;
-            controller.Maximum = 32;
+            controller.Maximum = 35;
 
+            CCStates = await LoadGameTable<CCStatesEntry>(controller, "CCStates.tbl");
+            CCStateAdditionalData = await LoadGameTable<CCStateAdditionalDataEntry>(controller, "CCStateAdditionalData.tbl");
+            CCStateDiminishingReturns = await LoadGameTable<CCStateDiminishingReturnsEntry>(controller, "CCStateDiminishingReturns.tbl");
             Spell4 = await LoadGameTable<Spell4Entry>(controller, "Spell4.tbl");
             Spell4AoeTargetConstraints = await LoadGameTable<Spell4AoeTargetConstraintsEntry>(controller, "Spell4AoeTargetConstraints.tbl");
             Spell4Base = await LoadGameTable<Spell4BaseEntry>(controller, "Spell4Base.tbl");

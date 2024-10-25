@@ -30,7 +30,7 @@
                 <Label Content="Support Power"/>
             </StackPanel>
             <StackPanel Grid.Column="1">
-                <TextBox TextWrapping="Wrap" Text="{Binding Level, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+                <TextBox TextWrapping="Wrap" Text="{Binding Path=Unit.Level, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
                 <TextBox TextWrapping="Wrap" Text="{Binding EffectiveLevel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
                 <TextBox TextWrapping="Wrap" Text="{Binding AssaultPower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
                 <TextBox TextWrapping="Wrap" Text="{Binding SupportPower, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="120" />
@@ -50,7 +50,7 @@
             </Expander>
 
             <TextBlock TextWrapping="Wrap" Text="{Binding SelectedSpell.ActionBarTooltip}"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedSpell.FilledActionBarTooltip}"/>
+            <TextBlock TextWrapping="Wrap" Text="{Binding SelectedSpell.FilledActionBarTooltip}" Margin="0,10,0,0"/>
 
         </StackPanel>
     </Grid>

@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using NexusForever.SpellWorks.Messages;
 using NexusForever.SpellWorks.Models;
+using NexusForever.SpellWorks.Services;
 using NexusForever.SpellWorks.Views;
 using System.Diagnostics;
 
@@ -13,6 +16,13 @@ namespace NexusForever.SpellWorks.ViewModels
         private ISpellModel _selectedSpell;
 
         [ObservableProperty]
+        public IUnitService  _unit;
+        partial void OnUnitChanged(IUnitService value)
+        {
+            Debug.WriteLine($"Unit update");
+        }
+
+        [ObservableProperty]
         public UInt32 _level;
         partial void OnLevelChanged(UInt32 value)
         {
@@ -22,10 +32,9 @@ namespace NexusForever.SpellWorks.ViewModels
             {
                 foreach (var effect in SelectedSpell.Effects)
                 {
-                    EffectiveLevel = effect.Entry.ParameterType00;
+                    EffectiveLevel = (uint)effect.Entry.ParameterType00;
                 }
             }
-            
         }
 
         [ObservableProperty]
@@ -49,6 +58,13 @@ namespace NexusForever.SpellWorks.ViewModels
         partial void OnSupportPowerChanged(UInt32 value)
         {
             Debug.WriteLine($"Support power change to: {value}");
+        }
+
+        private readonly IMessenger _messenger;
+        public SpellInfoSpellTabViewModel(
+            IMessenger messenger)
+        {
+            _messenger = messenger;
         }
     }
 }

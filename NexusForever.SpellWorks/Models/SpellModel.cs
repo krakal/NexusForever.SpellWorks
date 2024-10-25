@@ -1,9 +1,11 @@
-﻿using NexusForever.SpellWorks.GameTable.Model;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using NexusForever.SpellWorks.GameTable.Model;
+using NexusForever.SpellWorks.Messages;
 using NexusForever.SpellWorks.Services;
 
 namespace NexusForever.SpellWorks.Models
 {
-    public class SpellModel : ISpellModel
+    public class SpellModel : ISpellModel, IRecipient<UnitUpdatedMesssage>
     {
         public Spell4Entry Entry { get; private set; }
         public uint Id => Entry.Id;
@@ -15,6 +17,7 @@ namespace NexusForever.SpellWorks.Models
         public List<ISpellEffectModel> Effects { get; } = [];
         public List<ISpellProcModel> Procs { get; } = [];
         public List<uint> ProcReferences { get; } = [];
+        private IUnitService _unit;
 
         #region Dependency Injection
 
@@ -23,10 +26,13 @@ namespace NexusForever.SpellWorks.Models
 
         public SpellModel(
             ISpellModelService spellModelService,
-            ISpellTooltipParseService spellTooltipParseService)
+            ISpellTooltipParseService spellTooltipParseService,
+            IMessenger messenger)
         {
             _spellModelService = spellModelService;
             _spellTooltipParseService = spellTooltipParseService;
+
+            messenger.Register<UnitUpdatedMesssage>(this);
         }
 
         #endregion
@@ -46,6 +52,11 @@ namespace NexusForever.SpellWorks.Models
 
             if (_spellModelService.SpellProcReferences.TryGetValue(entry.Id, out List<uint> references))
                 ProcReferences.AddRange(references);
+        }
+
+        public void Receive(UnitUpdatedMesssage message)
+        {
+            
         }
     }
 }

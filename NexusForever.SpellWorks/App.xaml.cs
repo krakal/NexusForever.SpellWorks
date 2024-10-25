@@ -58,6 +58,7 @@ namespace NexusForever.SpellWorks
             services.AddSingleton<IArchiveService, ArchiveService>();
             services.AddSingleton<ITextTableService, TextTableService>();
             services.AddSingleton<IGameTableService, GameTableService>();
+            services.AddSingleton<IUnitService, UnitService>();
             services.AddSingleton<ISpellTooltipParseService, SpellTooltipParseService>();
 
             services.AddSingleton<ISpellModelFilterService, SpellModelFilterService>();

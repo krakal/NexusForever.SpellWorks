@@ -6,6 +6,9 @@ namespace NexusForever.SpellWorks.Services
 {
     public interface IGameTableService
     {
+        GameTable<CCStatesEntry> CCStates { get; }
+        GameTable<CCStateAdditionalDataEntry> CCStateAdditionalData { get; }
+        GameTable<CCStateDiminishingReturnsEntry> CCStateDiminishingReturns { get; }
         GameTable<Spell4Entry> Spell4 { get; }
         GameTable<Spell4AoeTargetConstraintsEntry> Spell4AoeTargetConstraints { get; }
         GameTable<Spell4BaseEntry> Spell4Base { get; }
